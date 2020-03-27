@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
@@ -9,7 +8,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect:"/login"
+      redirect:"/home"
     },
     {
       path: '/login',
@@ -20,45 +19,19 @@ export default new Router({
       path: "/home",
       name: "Home",
       component: () => import("@/components/Home"),
-      // redirect:"/supplier",
       children:[
         {
-          path: "/supplier",
-          name:"Supplier",
-          component:()=>import("@/components/Supplier")
-        },
-        
-        {
-          path: "/param",
-          name:"Paramr",
-          component:()=>import("@/components/Param")
+          path: "/perinfo",
+          name:"PersonInfo",
+          component:()=>import("@/components/PersonM/PerInfo.vue")
         },
         {
-          path:"/alter",
-          name:"Alter",
-          component:()=>import("@/components/Alter")
-        },
-        {
-          path:"/customer",
-          name:"Customer",
-          component:()=>import("@/components/Customer")
-        },
-        {
-          path:"/demo",
-          name:"Demo",
-          component:()=>import("@/components/Demo")
+          path: "/perview",
+          name:"PresonView",
+          component:()=>import("@/components/PersonM/PerView")
         },
         
       ]
     },
-    
-    {
-      path:"/index",
-      name:"Index",
-      component:()=>import("@/components/Index")
-    },
-    
-
-
   ]
 })

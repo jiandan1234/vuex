@@ -59,16 +59,16 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let _this = this;
-          console.log("这是请求前的this：",this)
           this.axios
             .post("/api/checklogin", {
               username: _this.loginform.username,
               password: _this.loginform.password
             })
             .then(response => {
-              console.log("这是请求后的this：",this)
-              console.log("后台数据", response.data);
-              if (this.response.length) {
+              if (response.data.length) {
+                console.log("响应后端数据")
+                // 将用户信息存在state中
+                _this.$store.commit("save_userinfo", response.data[0]);
                 this.$message({
                   message: "登陆成功",
                   type: "success"

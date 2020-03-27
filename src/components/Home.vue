@@ -1,89 +1,114 @@
 <template>
   <div class="home" style="width:100%;height:100%;">
-    <!-- 最上方 -->
-    <div class="top-connent" style="background-color: #409EFF;">
-      <div style="width:100%;background-color: #636363; overflow: hidden">
-        <span
-          class="demonstration"
-          style="float:left;padding-top:10px;color:white;margin-left:1%"
-        >网站首页</span>
-        <span
-          class="demonstration"
-          style="float:left;padding:5px;color:white;margin-left:2%;width:15%"
-        >
-          <el-input
-            placeholder="请输入"
-            icon="search"
-            v-model="searchCriteria"
-            :on-icon-click="handleIconClick"
-          ></el-input>
-        </span>
-        <span class="demonstration" style="float:right;padding-top:10px;margin-right:1%">
-          <el-dropdown trigger="click">
-            <span class="el-dropdown-link" style="color:white">
-              admin
-              <i class="el-icon-caret-bottom el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人信息</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </span>
-      </div>
-    </div>
-    <!-- 下方 -->
-    <div class="btm-connent">
-      <div class="lef-menu">
-        <el-radio-group v-model="isCollapse" style="margin: 20px;">
-          <el-radio-button :label="false">展开</el-radio-button>
-          <el-radio-button :label="true">收起</el-radio-button>
-        </el-radio-group>
-
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
-          :collapse="isCollapse"
-        >
-          
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">基础信息</span>
-              </template>
-              <el-menu-item-group>
-                <router-link to="/supplier">
-                  <el-menu-item index="1-1">供应商</el-menu-item>
-                </router-link>
-                <router-link to="/customer">
-                  <el-menu-item index="1-2">客户</el-menu-item>
-                </router-link>
-                <router-link to="/demo">
-                  <el-menu-item index="1-2">demo</el-menu-item>
-                </router-link>
-              </el-menu-item-group>
-            </el-submenu>
-         
-    
+    <el-container style="height: 500px; border: 1px solid #eee">
+      <!-- 左侧 -->
+      <el-aside width="200px" style="background-color: #B3C0D1">
+        <!-- 注意加router，否则导航不会被激活 -->
+        <el-menu :default-openeds="['1']" default-active="/home" router>
+          <div class="ms">
+            <router-link to="/home">
+            <h3 style="color:#000;">后台管理系统</h3>
+            </router-link>
+          </div>
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-s-custom"></i>人员管理
+            </template>
+            <el-menu-item index="perinfo">人员信息</el-menu-item>
+            <el-menu-item index="perview">人员统计</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-truck item"></i>车辆管理
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="2-1">车辆信息</el-menu-item>
+              <el-menu-item index="2-2">车辆统计</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-s-grid item"></i>物资管理
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="3-1">设备管理</el-menu-item>
+              <el-menu-item index="3-2">手套管理</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-s-check item"></i>证件管理
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="4-1">证件信息</el-menu-item>
+              <el-menu-item index="4-2">证件统计</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-setting item"></i>基本信息管理
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="4-1">参数配置</el-menu-item>
+              <el-menu-item index="4-2">客户管理</el-menu-item>
+              <el-menu-item index="4-2">供应商管理</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
-      </div>
-
-      <div class="right-content">
+      </el-aside>
+      <!-- 右侧内容 -->
+      <el-container class="top-con">
+        <Header />
         <router-view></router-view>
-      </div>
-    </div>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
+import Header from "../components/Allcomponent/hearder";
 export default {
+  components: {
+    Header
+  },
   name: "Home",
   data() {
     return {
-      isCollapse: false,
-      searchCriteria: ""
+       input: '',
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1518 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1517 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1519 弄",
+          zip: 200333
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          province: "上海",
+          city: "普陀区",
+          address: "上海市普陀区金沙江路 1516 弄",
+          zip: 200333
+        }
+      ]
     };
   },
   methods: {
@@ -95,6 +120,9 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    handleClick(row) {
+      console.log(row);
     }
   }
 };
@@ -103,32 +131,51 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .home {
-  border: 5px solid black;
+  border: 5px solid red;
   width: 100%;
   height: 100%;
 }
-.top-connent {
-  width: 100%;
-  height: 7%;
+.el-header {
+  background-color: #b3c0d1;
+  color: #333;
+  line-height: 60px;
 }
-.btm-connent {
-  width: 100%;
-  height: 93%;
+.el-container {
+  height: 100% !important;
+}
+.top-con {
   display: flex;
+  flex-direction: column;
 }
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 400px;
-  /* border: 5px solid yellow; */
+.el-aside {
+  color: #333;
+  height: 100% !important;
 }
-.lef-menu {
-  width: 15%;
-  height: 100%;
-  border: 1px solid red;
+.inp-con {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
-.right-content {
-  width: 85%;
-  height: 100%;
-  border: 2px solid red;
+.inp {
+  display: flex;
+  width: 300px;
+  margin: 10px;
+}
+.text {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* border:1px solid red; */
+}
+.ms {
+  width: auto;
+  height: 40px;
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000 ！important;
 }
 </style>
